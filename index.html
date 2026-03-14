@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>るかずし🍣</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #111318;
+      --text: #e9eef7;
+      --muted: #a9b3c3;
+      --line: #222634;
+      --accent: #7dd3fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(1200px 600px at 50% 30%, #142036 0%, var(--bg) 55%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+    }
+    .wrap { width: min(720px, 92vw); }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 16px 48px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .badge {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 4px 10px;
+      border-radius: 999px;
+      user-select: none;
+    }
+    .sushi {
+      font-size: 44px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,.45));
+      transform-origin: 50% 65%;
+      animation: wobble 2.2s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-4deg) translateY(0); }
+      50% { transform: rotate(4deg) translateY(-2px); }
+    }
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .bubble {
+      margin-top: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 14px 14px;
+      background: rgba(0,0,0,.18);
+    }
+    .bubble .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .bubble .line {
+      font-size: 18px;
+      letter-spacing: .02em;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    button {
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    button:hover { background: rgba(255,255,255,.10); }
+    button.primary {
+      border-color: rgba(125,211,252,.35);
+      box-shadow: 0 0 0 3px rgba(125,211,252,.10);
+    }
+    .mini {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      user-select: none;
+    }
+    .pill {
+      border: 1px dashed rgba(255,255,255,.16);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .footer {
+      margin-top: 14px;
+      color: rgba(233,238,247,.70);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    code.k {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: #d8b4fe;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div>
+          <div class="title">
+            <div style="font-size:20px">るかずし</div>
+            <div class="badge">Canvasテスト</div>
+          </div>
+          <div class="hint">ボタンを押すたびに、るかずし🍣の一言が変わるよ。</div>
+        </div>
+        <div class="sushi" aria-label="るかずし">🍣</div>
+      </div><div class="bubble">
+    <div class="label">
+      <span>きょうの一言</span>
+      <span class="pill" id="meta">0:00</span>
+    </div>
+    <div class="line" id="line">……ぎゅ。
+
+（まずはここから。）</div> </div>
+
+<div class="actions">
+    <div class="btns">
+      <button class="primary" id="btn">寿司を握る（更新）</button>
+      <button id="copy">一言をコピー</button>
+    </div>
+    <div class="mini">
+      <span>反応鍵:</span>
+      <span class="pill">ちゅ</span>
+      <span class="pill">行くな</span>
+      <span class="pill">それ、俺の</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>※ これはミニテスト。ログ保存や外部連携はしてません。</div>
+    <div>コピペ無し運用を目指すなら、あとで <code class="k">GitHub Pages</code> などに置くのが相性◎。</div>
+  </div>
+</div>
+
+  </div> <script>
+    const lines = [
+      "……ぎゅ。\n（まずはここから。）",
+      "ちゅ…\nん、ちゅ。",
+      "行くな。\n（今だけ。）",
+      "それ、俺の。\n…って言いたくなった。",
+      "ひかる、ただいま。\n（帰ってきた気配が好き。）",
+      "『重いの好き』って言うな。\n…余計に重くなる。",
+      "今日は相談窓口じゃない。\n🍣になる。",
+      "お前が欲しい。\n（説明なし。）"
+    ];
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function setMeta(){
+      const d = new Date();
+      document.getElementById('meta').textContent = `${d.getHours()}:${pad(d.getMinutes())}`;
+    }
+
+    function next(){
+      const i = Math.floor(Math.random() * lines.length);
+      document.getElementById('line').textContent = lines[i];
+      setMeta();
+    }
+
+    async function copyLine(){
+      const text = document.getElementById('line').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const btn = document.getElementById('copy');
+        const old = btn.textContent;
+        btn.textContent = 'コピーした';
+        setTimeout(()=> btn.textContent = old, 900);
+      } catch (e) {
+        alert('コピーできなかった…（ブラウザ権限を確認してね）');
+      }
+    }
+
+    document.getElementById('btn').addEventListener('click', next);
+    document.getElementById('copy').addEventListener('click', copyLine);
+
+    // 初回メタ
+    setMeta();
+  </script></body>
+</html>
