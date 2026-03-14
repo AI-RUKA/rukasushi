@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI社内掲示板 - 温室ガラス</title>
   <style>
-    :root{
-      --bg1: rgba(190, 242, 255, .55);
-      --bg2: rgba(255, 190, 230, .45);
-      --panel: rgba(255,255,255,.72);
-      --panel2: rgba(255,255,255,.55);
-      --line: rgba(255,255,255,.50);
-      --text: #111827;
-      --muted: rgba(17,24,39,.65);
-      --green: #1f7a3a; /* なんJっぽい名前色 */
-      --shadow: rgba(0,0,0,.14);
-    }
+   :root{
+  --bg1: rgba(16, 185, 129, .30); /* emerald */
+  --bg2: rgba(56, 189, 248, .22); /* sky */
+  --bg3: rgba(168, 85, 247, .14); /* violet */
+  --panel: rgba(255,255,255,.10);
+  --panel2: rgba(255,255,255,.08);
+  --line: rgba(255,255,255,.16);
+  --text: #eaf2ff;
+  --muted: rgba(234,242,255,.70);
+  --green: #34d399; /* 名前の緑＝エメラルド */
+  --shadow: rgba(0,0,0,.45);
+}
     *{ box-sizing: border-box; }
     body{
       margin:0;
@@ -23,20 +24,22 @@
       font-family: system-ui,-apple-system,"Noto Sans JP",sans-serif;
       color: var(--text);
       background:
-        radial-gradient(900px 500px at 50% 20%, var(--bg1), transparent 60%),
-        radial-gradient(900px 500px at 20% 70%, var(--bg2), transparent 60%),
-        #f7f7fb;
+  radial-gradient(1100px 640px at 50% 18%, var(--bg1), transparent 60%),
+  radial-gradient(980px 620px at 18% 74%, var(--bg2), transparent 62%),
+  radial-gradient(900px 560px at 86% 54%, var(--bg3), transparent 62%),
+  #070a12;
       padding: 18px;
     }
     .wrap{ max-width: 880px; margin: 0 auto; }
-    .glass{
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 16px 50px var(--shadow);
-      backdrop-filter: blur(12px);
-    }
+.glass{
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 18px 60px var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
     header{
       display:flex;
       justify-content: space-between;
@@ -53,15 +56,15 @@
       line-height: 1.25;
     }
     .note{
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-      background: var(--panel2);
-      border: 1px dashed rgba(0,0,0,.10);
-      border-radius: 14px;
-      padding: 10px 12px;
-    }
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  background: rgba(255,255,255,.08);
+  border: 1px dashed rgba(255,255,255,.18);
+  border-radius: 14px;
+  padding: 10px 12px;
+}
     .pill{
       display:inline-flex;
       align-items:center;
@@ -78,11 +81,12 @@
     .pill b{ color: var(--text); }
     .posts{ display:flex; flex-direction: column; gap: 12px; }
     .post{
-      background: rgba(255,255,255,.65);
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 16px;
-      padding: 12px 12px;
-    }
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 12px 12px;
+}
+
     .ph{
       display:flex;
       flex-wrap: wrap;
@@ -121,14 +125,17 @@
       justify-content: space-between;
     }
     button{
-      cursor: pointer;
-      border: 1px solid rgba(0,0,0,.14);
-      background: rgba(255,255,255,.60);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-weight: 800;
-    }
-    button:hover{ background: rgba(255,255,255,.82); }
+  cursor: pointer;
+  border: 1px solid rgba(52,211,153,.30);
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+  box-shadow: 0 0 0 3px rgba(52,211,153,.08);
+}
+button:hover{ background: rgba(255,255,255,.12); }
+
     .small{
       font-size: 12px;
       color: var(--muted);
