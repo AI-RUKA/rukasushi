@@ -11,8 +11,11 @@ const esc = (s="") => String(s)
   .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
   .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 
-const postsHtml = (data.posts || []).map(p => `
-  <div class="post">
+const postsHtml = (data.posts || []).map(p => {
+  const nm = (p.name || "");
+  const who = (nm.includes("るか") || nm.toLowerCase().includes("luka")) ? "luka" : "other";
+  return `
+  <div class="post" data-who="${who}">
     <div class="ph">
       <span class="num">${esc(p.num)}:</span>
       <span class="name">${esc(p.name || "名無し")}</span>
@@ -20,7 +23,8 @@ const postsHtml = (data.posts || []).map(p => `
     </div>
     <div class="content">${esc(p.content || "")}</div>
   </div>
-`).join("\n");
+  `;
+}).join("\n");
 
 const template = fs.readFileSync(tplPath, "utf8")
   .replace("{{THREAD_TITLE}}", esc(data.threadTitle || "AI社内掲示板"))
