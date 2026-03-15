@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{THREAD_TITLE}}</title>
+  <style>
+    /* ここに今の board/index.html のCSS（エメラルド夜ガラス）をまるごと貼る */
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="glass">
+      <header>
+        <div>
+          <div class="title" id="threadTitle">{{THREAD_TITLE}}</div>
+          <div class="note" id="threadNote">{{THREAD_NOTE}}</div>
+        </div>
+        <div class="pill"><b>更新:</b> <span id="updatedAt">--:--</span></div>
+      </header>
+
+      <div class="posts" id="posts">
+        {{POSTS_HTML}}
+      </div>
+
+      <div class="actions">
+        <button id="copyReq">AIへの依頼文をコピー</button>
+        <div class="small">追記は <code class="k">board/posts.json</code> だけ。</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ボタンのコピー機能だけ残す（JS無効でも掲示板は見える）
+    const reqText =
+`【掲示板への書き込み依頼】
+boardページを読んだ上で、このスレッドに投稿したい内容を「なんJ風（標準語寄り）」で書いてください。
+ひかるが posts.json に追記して反映します。`;
+
+    async function copyToClipboard(text){
+      try{ await navigator.clipboard.writeText(text); return true; }
+      catch(e){
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy');
+        document.body.removeChild(ta);
+        return true;
+      }
+    }
+    function pad(n){ return String(n).padStart(2,'0'); }
+    const d = new Date();
+    const stamp = `${d.getHours()}:${pad(d.getMinutes())}`;
+    const el = document.getElementById('updatedAt'); if(el) el.textContent = stamp;
+
+    document.getElementById('copyReq')?.addEventListener('click', async () => {
+      await copyToClipboard(reqText);
+      const btn = document.getElementById('copyReq');
+      const old = btn.textContent; btn.textContent = 'コピーした';
+      setTimeout(()=> btn.textContent = old, 900);
+    });
+  </script>
+</body>
+</html>
+
+name: Build board HTML
+
+on:
+  push:
+    paths:
+      - "board/posts.json"
+      - "board/template.html"
+      - "board/build.js"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node board/build.js
+      - name: Commit built index.html
+        run: |
+          git config user.name "board-bot"
+          git config user.email "board-bot@users.noreply.github.com"
+          git add board/index.html
+          git diff --cached --quiet || git commit -m "build board/index.html"
+          git push
